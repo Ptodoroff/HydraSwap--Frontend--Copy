@@ -7,7 +7,12 @@ import { useWeb3React } from "@web3-react/core";
 import { Web3Provider } from "@ethersproject/providers";
 import { InjectedConnector } from "@web3-react/injected-connector";
 
-const ConnectButton = styled.div`
+interface DarkProps {
+  darkMode: boolean;
+  dark?: any;
+}
+
+const ConnectButton = styled.div<DarkProps>`
   width: 518px;
   font-size: 17px;
   display: flex;
@@ -15,23 +20,27 @@ const ConnectButton = styled.div`
   align-items: center;
   height: 57px;
   padding: 3px;
-  background-color: #e1f2ff;
+  background-color: ${(props) => (props.darkMode ? "#153d6f" : "#e1f2ff")};
   border-radius: 12px;
   border: none;
   color: #026fc2;
   font-weight: 200;
-  margin-right: 15px;
   &:hover {
     background-color: #d7edfe;
     cursor: pointer;
   }
 `;
 
-const Body = styled.div`
+const Body = styled.div<DarkProps>`
   padding-top: 10px;
-  background-color: #edeef2;
+  background-image: ${(props) =>
+    props.darkMode
+      ? "radial-gradient(50% 50% at 50% 50%, rgba(2, 111, 194, 0.1) 0%, rgba(255, 255, 255, 0) 100%)"
+      : "radial-gradient(50% 50% at 50% 50%, rgba(33, 114, 229, 0.1) 0%, rgba(33, 36, 41, 0) 100%)"};
   width: 100vw;
   height: 790px;
+  background-color: ${(props) =>
+    props.darkMode ? "rgb(44, 47, 54)" : "rgb(247, 248, 250)"};
 `;
 
 const Wrapper = styled.div`
@@ -41,8 +50,8 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 
-const SwapBox = styled.div`
-background-color: white;
+const SwapBox = styled.div<DarkProps>`
+background-color: ${(props) => (props.darkMode ? "#212429" : "white")};
 display:flex;
 align-items:center;
 justify-content:space-between;
@@ -58,9 +67,11 @@ box-shadow:0px 0px 25px rgba(2, 111, 194, 0.5);
 padding:16px;
 font-family: "Arial" ;
 margin-top: 70px;
+color: ${(props) => (props.darkMode ? "white" : "black")};
+
 `;
 
-export default function Main() {
+export default function Main({ darkMode }: DarkProps) {
   const { chainId, account, activate, deactivate, active, library } =
     useWeb3React<Web3Provider>();
   const injectedConnector = new InjectedConnector({
@@ -70,7 +81,7 @@ export default function Main() {
     activate(injectedConnector);
   };
   return (
-    <Body>
+    <Body darkMode={darkMode}>
       <Wrapper>
         <Image
           src="/hydra-guard.png"
@@ -82,12 +93,15 @@ export default function Main() {
             opacity: 0.2,
           }}
         />{" "}
-        <SwapBox>
+        <SwapBox darkMode={darkMode}>
           Stake
           {account ? (
-            <Input />
+            <Input darkMode={darkMode} />
           ) : (
-            <ConnectButton onClick={connect}> Connect Wallet </ConnectButton>
+            <ConnectButton darkMode={darkMode} onClick={connect}>
+              {" "}
+              Connect Wallet{" "}
+            </ConnectButton>
           )}
         </SwapBox>
         <Image

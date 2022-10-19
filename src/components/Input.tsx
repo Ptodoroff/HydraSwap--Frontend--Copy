@@ -6,14 +6,21 @@ import { useWeb3React } from "@web3-react/core";
 import { Web3Provider } from "@ethersproject/providers";
 import { InjectedConnector } from "@web3-react/injected-connector";
 
-const SelectedTokenInfo = styled.button`
+interface DarkProps {
+  darkMode: boolean;
+  dark?: any;
+}
+
+const SelectedTokenInfo = styled.button<DarkProps>`
   height: 32px;
   width: 145px;
   border-radius: 12px;
   border: none;
   font-size: 20px;
   display: flex;
-  background-color: white;
+  background-color: ${(props) => (props.darkMode ? "#212429" : "white")};
+  color: ${(props) => (props.darkMode ? "white" : "black")};
+
   justify-content: center;
   align-items: center;
   &:hover {
@@ -22,12 +29,12 @@ const SelectedTokenInfo = styled.button`
   }
 `;
 
-const Max = styled.button`
+const Max = styled.button<DarkProps>`
   width: 40px;
   height: 28px;
-  background-color: #e1f2ff;
-  border-radius: 12px;
-  border: none;
+  background-color: ${(props) => (props.darkMode ? "#153d6f" : "#e1f2ff")};
+  border-radius: 8px;
+  border: ${(props) => (props.darkMode ? `0.5px solid #026fc2` : `none`)};
   color: #026fc2;
   font-weight: 100;
   display: flex;
@@ -40,17 +47,19 @@ const Max = styled.button`
   }
 `;
 
-const TokenInput = styled.input`
+const TokenInput = styled.input<DarkProps>`
   display: flex;
-  border: none;
-  background-color: white;
+  border: #212429;
+  background-color: ${(props) => (props.darkMode ? "#212429" : "white")};
   width: 314px;
   height: 29px;
   outline: none;
   font-size: 25px;
 `;
 
-const InputCluster = styled.div`
+const InputCluster = styled.div<DarkProps>`
+background-color: ${(props) => (props.darkMode ? `#40444f` : `#e8e8e8`)},
+
   width: 519px;
   height: 80px;
   display: flex;
@@ -60,7 +69,7 @@ const InputCluster = styled.div`
   padding: 5px;
 `;
 
-const ApproveandStake = styled.button`
+const ApproveandStake = styled.button<DarkProps>`
   width: 250px;
   font-size: 17px;
   display: flex;
@@ -68,9 +77,9 @@ const ApproveandStake = styled.button`
   align-items: center;
   height: 57px;
   padding: 3px;
-  background-color: #e1f2ff;
+  background-color: ${(props) => (props.darkMode ? "#153d6f" : "#e1f2ff")};
   border-radius: 20px;
-  border: none;
+  border: none  ;
   color: #026fc2;
   font-weight: 200;
   &:hover
@@ -86,37 +95,40 @@ const ButtonCluster = styled.div`
   padding: 0px;
 `;
 
-const InfoPanel = styled.div`
+const InfoPanel = styled.div<DarkProps>`
   width: 520px;
   padding: 15px;
   height: 82px;
   display: flex;
-  border: 1px solid #efefef;
-  border-radius: 30px;
+  border: ${(props) =>
+    props.darkMode ? `0.5px solid grey` : `1px solid #efefef`};
+  border-radius: 25px;
   flex-direction: column;
   align-items: space-between;
   justify-content: space-between;
+  color: ${(props) => (props.darkMode ? "white" : "black")};
 `;
 
-export default function Input() {
+export default function Input({ dark, darkMode }: DarkProps) {
   return (
     <>
-      <InfoPanel>
+      <InfoPanel darkMode={darkMode}>
         Amount
-        <InputCluster>
-          <TokenInput></TokenInput>
-          <Max>
+        <InputCluster darkMode={darkMode}>
+          <TokenInput darkMode={darkMode}></TokenInput>
+          <Max darkMode={darkMode}>
             <span>MAX</span>
           </Max>
-          <SelectedTokenInfo>
+          <SelectedTokenInfo darkMode={darkMode}>
             <Image
+              darkMode={darkMode}
               src="./changex-logo-round.png"
               style={{
                 width: 24,
                 height: 24,
                 marginRight: 20,
                 borderRadius: 50,
-                boxShadow: "3px 3px 5px #ccc",
+                boxShadow: darkMode ? "none" : "3px 3px 5px #ccc",
               }}
             />
             CHANGE
@@ -124,8 +136,14 @@ export default function Input() {
         </InputCluster>
       </InfoPanel>
       <ButtonCluster>
-        <ApproveandStake style={{ marginRight: 30 }}> Approve </ApproveandStake>
-        <ApproveandStake style={{ marginLeft: 30 }}> Stake </ApproveandStake>
+        <ApproveandStake darkMode={darkMode} style={{ marginRight: 30 }}>
+          {" "}
+          Approve{" "}
+        </ApproveandStake>
+        <ApproveandStake darkMode={darkMode} style={{ marginLeft: 30 }}>
+          {" "}
+          Stake{" "}
+        </ApproveandStake>
       </ButtonCluster>
     </>
   );

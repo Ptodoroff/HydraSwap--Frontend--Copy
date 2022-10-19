@@ -10,12 +10,12 @@ interface DarkProps {
   dark?: any;
 }
 
-const ConnectButton = styled.button`
+const ConnectButton = styled.button<DarkProps>`
   width: 168px;
   font-size: 17px;
   height: 37px;
   padding: 3px;
-  background-color: #e1f2ff;
+  background-color: ${(props) => (props.darkMode ? "#153d6f" : "#e1f2ff")};
   border-radius: 12px;
   border: none;
   color: #026fc2;
@@ -27,14 +27,14 @@ const ConnectButton = styled.button`
   }
 `;
 
-const ConnectedButton = styled.button`
+const ConnectedButton = styled.button<DarkProps>`
   display: flex;
   align-items: center;
   width: 167px;
   font-size: 17px;
   height: 37px;
   padding: 3px;
-  background-color: #e1f2ff;
+  background-color: ${(props) => (props.darkMode ? "#153d6f" : "#e1f2ff")};
   border-radius: 12px;
   border: none;
   color: #026fc2;
@@ -57,27 +57,34 @@ const HeaderFrame = styled.div<DarkProps>`
   padding: 1rem;
   z-index: 2;
   font-weight: 500;
-  background-color: ${(props) => (props.darkMode ? "#2c2f36" : "#edeef2")};
+  background-image: ${(props) =>
+    props.darkMode
+      ? "radial-gradient(50% 50% at 50% 50%, rgba(33, 114, 229, 0.1) 0%, rgba(33, 36, 41, 0) 100%)"
+      : "radial-gradient(50% 50% at 50% 50%, rgba(2, 111, 194, 0.1) 0%, rgba(255, 255, 255, 0) 100%)"};
+
+  background-color: ${(props) =>
+    props.darkMode ? "rgb(44, 47, 54)" : "rgb(247, 248, 250)"};
 `;
 
-const StakingTitleWrap = styled.div`
+const StakingTitleWrap = styled.div<DarkProps>`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: white;
-  width: 5%;
-  height: 40px;
+  background-color: ${(props) => (props.darkMode ? "#212429" : "white")};
+  width: 9%;
+  height: 46px;
+  padding: 2px;
   border-radius: 12px;
   margin-left: 190px;
   font-family: Arial;
   font-weight: 600;
 `;
 
-const BalanceDiv = styled.div`
+const BalanceDiv = styled.div<DarkProps>`
   margin-left: 3px;
   width: 95px;
   height: 30px;
-  background-color: #e1f2ff;
+  background-color: ${(props) => (props.darkMode ? "#153d6f" : "#e1f2ff")};
   border-radius: 10px;
   border-left: 1px solid #026fc2;
   color: #026fc2;
@@ -88,13 +95,13 @@ const BalanceDiv = styled.div`
   font-size: 17px;
 `;
 
-const ThemeToggle = styled.button`
+const ThemeToggle = styled.button<DarkProps>`
   height: 35px;
   width: 42px;
   border-radius: 10px;
   margin: 0px !important;
   border: none;
-  background-color: #e8e8e8;
+  background-color: ${(props) => (props.darkMode ? `#40444f` : `#e8e8e8`)};
   &:hover {
     cursor: pointer;
   }
@@ -127,31 +134,48 @@ export default function Header({ dark, darkMode }: DarkProps) {
   return (
     <>
       <HeaderFrame darkMode={darkMode}>
-        <Image src="/hydra-logo.png" style={{ width: 50 }} />
-        <StakingTitleWrap>
+        <Image
+          darkMode={darkMode}
+          src="/hydra-logo.png"
+          style={{
+            width: 50,
+            backgroundColor: darkMode ? `white` : `#edeef2`,
+            borderRadius: 50,
+            borderStyle: "none",
+          }}
+        />
+        <StakingTitleWrap darkMode={darkMode}>
           <div
-            style={{ borderRadius: 8, backgroundColor: "#e8e8e8", padding: 6 }}
+            style={{
+              borderRadius: 8,
+              backgroundColor: darkMode ? "#40444f" : "#e8e8e8",
+              padding: 8,
+              color: darkMode ? "white" : "black",
+            }}
           >
             Staking
           </div>
         </StakingTitleWrap>
         <div style={{ display: "flex" }}>
           {account ? (
-            <ConnectedButton onClick={stop}>
+            <ConnectedButton darkMode={darkMode} onClick={stop}>
               {`0x...${account.slice(-3)}`}
-              <BalanceDiv> {`${Number(balance).toFixed(3)} ETH`}</BalanceDiv>
+              <BalanceDiv darkMode={darkMode}>
+                {" "}
+                {`${Number(balance).toFixed(3)} ETH`}
+              </BalanceDiv>
             </ConnectedButton>
           ) : (
-            <ConnectButton onClick={connect}>
+            <ConnectButton darkMode={darkMode} onClick={connect}>
               {" "}
               Connect to a wallet
             </ConnectButton>
           )}
-          <ThemeToggle onClick={dark}>
+          <ThemeToggle darkMode={darkMode} onClick={dark}>
             {darkMode ? (
-              <Image src="/sun.svg" style={{ width: 22 }} />
-            ) : (
               <Image src="/moon.png" style={{ width: 22 }} />
+            ) : (
+              <Image src="/sun.svg" style={{ width: 22 }} />
             )}
           </ThemeToggle>
         </div>

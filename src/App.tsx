@@ -1,5 +1,4 @@
 import "./App.css";
-import styled from "styled-components";
 import Header from "./components/Header";
 import Main from "./components/Main";
 import { useEffect, useState } from "react";
@@ -23,7 +22,7 @@ function App() {
     <Web3ReactProvider getLibrary={getLibrary}>
       <div className="App">
         <Header darkMode={darkMode} dark={dark} />
-        <Main />
+        <Main darkMode={darkMode} />
       </div>
     </Web3ReactProvider>
   );
