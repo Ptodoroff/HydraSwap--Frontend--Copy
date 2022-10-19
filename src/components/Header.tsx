@@ -51,7 +51,7 @@ const HeaderFrame = styled.div<DarkProps>`
   justify-content: space-between;
   align-items: center;
   flex-direction: row;
-  width: 98.1vw;
+  width: auto;
   top: 0;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   padding: 1rem;
@@ -71,7 +71,7 @@ const StakingTitleWrap = styled.div<DarkProps>`
   justify-content: center;
   align-items: center;
   background-color: ${(props) => (props.darkMode ? "#212429" : "white")};
-  width: 5%;
+  width: auto;
   height: 50px;
   padding: 2px;
   border-radius: 12px;

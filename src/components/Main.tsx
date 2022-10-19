@@ -39,7 +39,7 @@ const Body = styled.div<DarkProps>`
     props.darkMode
       ? "radial-gradient(50% 50% at 50% 50%, rgba(2, 111, 194, 0.1) 0%, rgba(255, 255, 255, 0) 100%)"
       : "radial-gradient(50% 50% at 50% 50%, rgba(33, 114, 229, 0.1) 0%, rgba(33, 36, 41, 0) 100%)"};
-  width: 100vw;
+  width: auto;
   height: 830px;
   background-color: ${(props) =>
     props.darkMode ? "rgb(44, 47, 54)" : "rgb(247, 248, 250)"};
