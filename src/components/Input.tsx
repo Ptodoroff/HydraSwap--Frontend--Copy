@@ -1,10 +1,5 @@
 import styled from "styled-components";
 import Image from "./Image";
-import { useEffect, useState } from "react";
-
-import { useWeb3React } from "@web3-react/core";
-import { Web3Provider } from "@ethersproject/providers";
-import { InjectedConnector } from "@web3-react/injected-connector";
 
 interface DarkProps {
   darkMode: boolean;
@@ -16,6 +11,7 @@ const SelectedTokenInfo = styled.button<DarkProps>`
   width: 145px;
   border-radius: 12px;
   border: none;
+  margin-bottom: 0px;
   font-size: 20px;
   display: flex;
   background-color: ${(props) => (props.darkMode ? "#212429" : "white")};
@@ -24,7 +20,7 @@ const SelectedTokenInfo = styled.button<DarkProps>`
   justify-content: center;
   align-items: center;
   &:hover {
-    background-color: #f8f8f8;
+    opacity: 0.8;
     cursor: pointer;
   }
 `;
@@ -32,11 +28,11 @@ const SelectedTokenInfo = styled.button<DarkProps>`
 const Max = styled.button<DarkProps>`
   width: 40px;
   height: 28px;
-  background-color: ${(props) => (props.darkMode ? "#153d6f" : "#e1f2ff")};
+  background-color: ${(props) => (props.darkMode ? "#1d2e48" : "#e1f2ff")};
   border-radius: 8px;
   border: ${(props) => (props.darkMode ? `0.5px solid #026fc2` : `none`)};
   color: #026fc2;
-  font-weight: 100;
+  font-weight: 500;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -58,9 +54,7 @@ const TokenInput = styled.input<DarkProps>`
 `;
 
 const InputCluster = styled.div<DarkProps>`
-background-color: ${(props) => (props.darkMode ? `#40444f` : `#e8e8e8`)},
-
-  width: 519px;
+  width: 480px;
   height: 80px;
   display: flex;
   align-items: center;
@@ -77,11 +71,11 @@ export const ApproveandStake = styled.button<DarkProps>`
   align-items: center;
   height: 57px;
   padding: 3px;
-  background-color: ${(props) => (props.darkMode ? "#153d6f" : "#e1f2ff")};
+  background-color: ${(props) => (props.darkMode ? "#1d2e48" : "#e1f2ff")};
   border-radius: 20px;
   border: none  ;
   color: #026fc2;
-  font-weight: 200;
+  font-weight: 500;
   &:hover
     background-color: #d7edfe;
     cursor: pointer;
@@ -96,10 +90,13 @@ export const ButtonCluster = styled.div`
 `;
 
 const InfoPanel = styled.div<DarkProps>`
-  width: 520px;
+  width: 490px;
   padding: 15px;
-  height: 82px;
+  padding-bottom: 2px;
+  padding-top: 5px;
+  height: 80px;
   display: flex;
+  margin-bottom: 5px;
   border: ${(props) =>
     props.darkMode ? `0.5px solid grey` : `1px solid #efefef`};
   border-radius: 25px;
@@ -113,7 +110,15 @@ export default function Input({ dark, darkMode }: DarkProps) {
   return (
     <>
       <InfoPanel darkMode={darkMode}>
-        Amount
+        <span
+          style={{
+            fontSize: "14px",
+            fontWeight: 550,
+            color: darkMode ? "white" : "black",
+          }}
+        >
+          Amount
+        </span>
         <InputCluster darkMode={darkMode}>
           <TokenInput darkMode={darkMode}></TokenInput>
           <Max darkMode={darkMode}>
@@ -127,6 +132,7 @@ export default function Input({ dark, darkMode }: DarkProps) {
                 width: 24,
                 height: 24,
                 marginRight: 20,
+                marginLeft: 20,
                 borderRadius: 50,
                 boxShadow: darkMode ? "none" : "3px 3px 5px #ccc",
               }}

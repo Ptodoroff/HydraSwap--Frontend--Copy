@@ -19,12 +19,12 @@ const ConnectButton = styled.div<DarkProps>`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 57px;
+  height: 50px;
   padding: 3px;
-  background-color: ${(props) => (props.darkMode ? "#153d6f" : "#e1f2ff")};
-  border-radius: 12px;
+  background-color: ${(props) => (props.darkMode ? "#1d2e48" : "#e1f2ff")};
+  border-radius: 20px;
   border: none;
-  color: #026fc2;
+  color: ${(props) => (props.darkMode ? `#6da8ff` : `#026fc2`)};
   font-weight: 200;
   &:hover {
     opacity: 0.6;
@@ -33,7 +33,8 @@ const ConnectButton = styled.div<DarkProps>`
 `;
 
 const Body = styled.div<DarkProps>`
-  padding-top: 10px;
+  position: relative;
+  padding-top: 100px;
   background-image: ${(props) =>
     props.darkMode
       ? "radial-gradient(50% 50% at 50% 50%, rgba(2, 111, 194, 0.1) 0%, rgba(255, 255, 255, 0) 100%)"
@@ -52,29 +53,29 @@ const Wrapper = styled.div`
 `;
 
 const SwapBox = styled.div<DarkProps>`
+position: 'absolute';
 background-color: ${(props) => (props.darkMode ? "#212429" : "white")};
 display:flex;
 align-items:center;
 justify-content:space-between;
 flex-direction:column;
-width: 550px;
-height 225px;
+width: 520px;
+height 215px;
 border-radius: 30px;
-font-weight: 100;
+font-weight: 200;
+font-size:20px;
 border:2px;
 position: relative;
 z-index: 10;
 box-shadow:0px 0px 25px rgba(2, 111, 194, 0.5);
 padding:16px;
-font-family: "Arial" ;
 margin-top: 70px;
 color: ${(props) => (props.darkMode ? "white" : "black")};
 
 `;
 
 export default function Main({ darkMode }: DarkProps) {
-  const { chainId, account, activate, deactivate, active, library } =
-    useWeb3React<Web3Provider>();
+  const { account, activate } = useWeb3React<Web3Provider>();
   const injectedConnector = new InjectedConnector({
     supportedChainIds: [1, 3, 4, 5, 42],
   });
@@ -87,11 +88,14 @@ export default function Main({ darkMode }: DarkProps) {
         <Image
           src="/hydra-guard.png"
           style={{
+            position: "absolute",
             right: 250,
             height: 461,
             width: 200,
+            marginTop: 10,
             transform: `rotateY(180deg)`,
             opacity: 0.2,
+            marginRight: 820,
           }}
         />{" "}
         <SwapBox darkMode={darkMode}>
@@ -118,10 +122,13 @@ export default function Main({ darkMode }: DarkProps) {
         <Image
           src="/hydra-guard.png"
           style={{
+            position: "absolute",
+            marginTop: 10,
             left: 250,
             height: 461,
             width: 200,
             opacity: 0.2,
+            marginLeft: 820,
           }}
         />{" "}
       </Wrapper>

@@ -12,14 +12,14 @@ interface DarkProps {
 
 const ConnectButton = styled.button<DarkProps>`
   width: 168px;
-  font-size: 17px;
+  font-size: 15px;
   height: 37px;
   padding: 3px;
-  background-color: ${(props) => (props.darkMode ? "#153d6f" : "#e1f2ff")};
+  background-color: ${(props) => (props.darkMode ? "#1d2e48" : "#e1f2ff")};
   border-radius: 12px;
   border: none;
-  color: #026fc2;
-  font-weight: 200;
+  color: ${(props) => (props.darkMode ? `#6da8ff` : `#026fc2`)};
+  font-weight: 500;
   margin-right: 15px;
   &:hover {
     border: 1px solid #026fc2;
@@ -31,14 +31,14 @@ const ConnectedButton = styled.button<DarkProps>`
   display: flex;
   align-items: center;
   width: 167px;
-  font-size: 17px;
+  font-size: 15px;
   height: 37px;
   padding: 3px;
-  background-color: ${(props) => (props.darkMode ? "#153d6f" : "#e1f2ff")};
+  background-color: ${(props) => (props.darkMode ? "#1d2e48" : "#e1f2ff")};
   border-radius: 12px;
   border: none;
-  color: #026fc2;
-  font-weight: 200;
+  color: #6da8ff;
+  font-weight: 500;
   margin-right: 10px;
   &:hover {
     border: 1px solid #026fc2;
@@ -71,23 +71,21 @@ const StakingTitleWrap = styled.div<DarkProps>`
   justify-content: center;
   align-items: center;
   background-color: ${(props) => (props.darkMode ? "#212429" : "white")};
-  width: 9%;
-  height: 46px;
+  width: 5%;
+  height: 50px;
   padding: 2px;
   border-radius: 12px;
   margin-left: 190px;
-  font-family: Arial;
-  font-weight: 600;
 `;
 
 const BalanceDiv = styled.div<DarkProps>`
   margin-left: 3px;
   width: 95px;
   height: 30px;
-  background-color: ${(props) => (props.darkMode ? "#153d6f" : "#e1f2ff")};
+  background-color: ${(props) => (props.darkMode ? "#1d2e48" : "#e1f2ff")};
   border-radius: 10px;
   border-left: 1px solid #026fc2;
-  color: #026fc2;
+  color: #6da8ff;
   font-weight: 100;
   display: flex;
   align-items: center;
@@ -150,6 +148,7 @@ export default function Header({ dark, darkMode }: DarkProps) {
               borderRadius: 8,
               backgroundColor: darkMode ? "#40444f" : "#e8e8e8",
               padding: 8,
+              fontWeight: 800,
               color: darkMode ? "white" : "black",
             }}
           >
@@ -175,7 +174,7 @@ export default function Header({ dark, darkMode }: DarkProps) {
             {darkMode ? (
               <Image src="/moon.png" style={{ width: 22 }} />
             ) : (
-              <Image src="/sun.svg" style={{ width: 22 }} />
+              <Image src="/sun.svg" style={{ width: 22, paddingTop: 4 }} />
             )}
           </ThemeToggle>
         </div>
