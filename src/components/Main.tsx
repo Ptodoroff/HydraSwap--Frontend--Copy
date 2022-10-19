@@ -6,6 +6,7 @@ import Input from "./Input";
 import { useWeb3React } from "@web3-react/core";
 import { Web3Provider } from "@ethersproject/providers";
 import { InjectedConnector } from "@web3-react/injected-connector";
+import { ApproveandStake, ButtonCluster } from "./Input";
 
 interface DarkProps {
   darkMode: boolean;
@@ -38,7 +39,7 @@ const Body = styled.div<DarkProps>`
       ? "radial-gradient(50% 50% at 50% 50%, rgba(2, 111, 194, 0.1) 0%, rgba(255, 255, 255, 0) 100%)"
       : "radial-gradient(50% 50% at 50% 50%, rgba(33, 114, 229, 0.1) 0%, rgba(33, 36, 41, 0) 100%)"};
   width: 100vw;
-  height: 790px;
+  height: 830px;
   background-color: ${(props) =>
     props.darkMode ? "rgb(44, 47, 54)" : "rgb(247, 248, 250)"};
 `;
@@ -95,8 +96,18 @@ export default function Main({ darkMode }: DarkProps) {
         />{" "}
         <SwapBox darkMode={darkMode}>
           Stake
+          <Input darkMode={darkMode} />
           {account ? (
-            <Input darkMode={darkMode} />
+            <ButtonCluster>
+              <ApproveandStake darkMode={darkMode} style={{ marginRight: 30 }}>
+                {" "}
+                Approve{" "}
+              </ApproveandStake>
+              <ApproveandStake darkMode={darkMode} style={{ marginLeft: 30 }}>
+                {" "}
+                Stake{" "}
+              </ApproveandStake>
+            </ButtonCluster>
           ) : (
             <ConnectButton darkMode={darkMode} onClick={connect}>
               {" "}

@@ -51,7 +51,7 @@ const HeaderFrame = styled.div<DarkProps>`
   justify-content: space-between;
   align-items: center;
   flex-direction: row;
-  width: 98vw;
+  width: 98.1vw;
   top: 0;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   padding: 1rem;

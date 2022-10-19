@@ -69,7 +69,7 @@ background-color: ${(props) => (props.darkMode ? `#40444f` : `#e8e8e8`)},
   padding: 5px;
 `;
 
-const ApproveandStake = styled.button<DarkProps>`
+export const ApproveandStake = styled.button<DarkProps>`
   width: 250px;
   font-size: 17px;
   display: flex;
@@ -87,7 +87,7 @@ const ApproveandStake = styled.button<DarkProps>`
     cursor: pointer;
   }
 `;
-const ButtonCluster = styled.div`
+export const ButtonCluster = styled.div`
   width: 519px;
   display: flex;
   justify-content: center;
@@ -135,16 +135,6 @@ export default function Input({ dark, darkMode }: DarkProps) {
           </SelectedTokenInfo>
         </InputCluster>
       </InfoPanel>
-      <ButtonCluster>
-        <ApproveandStake darkMode={darkMode} style={{ marginRight: 30 }}>
-          {" "}
-          Approve{" "}
-        </ApproveandStake>
-        <ApproveandStake darkMode={darkMode} style={{ marginLeft: 30 }}>
-          {" "}
-          Stake{" "}
-        </ApproveandStake>
-      </ButtonCluster>
     </>
   );
 }
