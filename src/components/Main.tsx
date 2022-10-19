@@ -26,7 +26,7 @@ const ConnectButton = styled.div<DarkProps>`
   color: #026fc2;
   font-weight: 200;
   &:hover {
-    background-color: #d7edfe;
+    opacity: 0.6;
     cursor: pointer;
   }
 `;
