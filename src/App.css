@@ -10,3 +10,70 @@ body {
   font-weight: 400 !important;
   font-style: normal;
 }
+
+.dragon--logo--left {
+  position: absolute;
+  left: 410px;
+  height: 461px;
+  width: 200px;
+  margin-top: 30px;
+  opacity: 0.2;
+  transform: rotateY(180deg);
+  margin-right: 82vw;
+}
+
+.coinLogo {
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+  margin-left: 10px;
+  border-radius: 50px;
+}
+
+.dragon--logo--right {
+  position: absolute;
+  right: 410px;
+  height: 461px;
+  width: 200px;
+  margin-top: 30px;
+  opacity: 0.2;
+  margin-left: 82vw;
+}
+
+@media (max-width: 1000px) {
+  .dragon--logo--right {
+    width: 25vw;
+    margin-top: 10px;
+    opacity: 0.2;
+    right: 0px;
+    height: 45vh;
+  }
+
+  .dragon--logo--left {
+    left: 0px;
+    height: 45vh;
+    width: 25vw;
+    opacity: 0.2;
+    transform: rotateY(180deg);
+    margin-top: 10px;
+  }
+
+  .wrapper {
+    position: static;
+  }
+}
+
+@media (min-width: 800px) {
+  .stakingWrap {
+    margin-left: 10vw;
+  }
+  .coinLogo {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  body {
+    width: 100vw;
+    height: 100vh;
+  }
+}

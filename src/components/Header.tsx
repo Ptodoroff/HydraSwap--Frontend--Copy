@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useWeb3React } from "@web3-react/core";
 import { Web3Provider } from "@ethersproject/providers";
 import { InjectedConnector } from "@web3-react/injected-connector";
-
+import "../App.css";
 interface DarkProps {
   darkMode: boolean;
   dark?: any;
@@ -25,6 +25,11 @@ const ConnectButton = styled.button<DarkProps>`
     border: 1px solid #026fc2;
     cursor: pointer;
   }
+
+  @media (max-width: 1000px) {
+    margin-right: 3px;
+    margin-left: 3px;
+  }
 `;
 
 const ConnectedButton = styled.button<DarkProps>`
@@ -43,6 +48,10 @@ const ConnectedButton = styled.button<DarkProps>`
   &:hover {
     border: 1px solid #026fc2;
     cursor: pointer;
+  }
+
+  @media (max-width: 1000px) {
+    margin-left: 5px;
   }
 `;
 const HeaderFrame = styled.div<DarkProps>`
@@ -75,7 +84,6 @@ const StakingTitleWrap = styled.div<DarkProps>`
   height: 50px;
   padding: 2px;
   border-radius: 12px;
-  margin-left: 190px;
 `;
 
 const BalanceDiv = styled.div<DarkProps>`
@@ -142,7 +150,7 @@ export default function Header({ dark, darkMode }: DarkProps) {
             borderStyle: "none",
           }}
         />
-        <StakingTitleWrap darkMode={darkMode}>
+        <StakingTitleWrap darkMode={darkMode} className="stakingWrap">
           <div
             style={{
               borderRadius: 8,

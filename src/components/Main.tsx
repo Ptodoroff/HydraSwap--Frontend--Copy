@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Image from "./Image";
 import Input from "./Input";
+import "../App.css";
 
 import { useWeb3React } from "@web3-react/core";
 import { Web3Provider } from "@ethersproject/providers";
@@ -29,6 +30,11 @@ const ConnectButton = styled.div<DarkProps>`
   &:hover {
     opacity: 0.6;
     cursor: pointer;
+  }
+  @media (max-width: 1000px) {
+    width: 60vw;
+    height: 5vh;
+    border-radius: 12px;
   }
 `;
 
@@ -59,7 +65,7 @@ display:flex;
 align-items:center;
 justify-content:space-between;
 flex-direction:column;
-width: 520px;
+width: 512px;
 height 215px;
 border-radius: 30px;
 font-weight: 200;
@@ -71,6 +77,12 @@ box-shadow:0px 0px 25px rgba(2, 111, 194, 0.5);
 padding:16px;
 margin-top: 70px;
 color: ${(props) => (props.darkMode ? "white" : "black")};
+
+@media(max-width: 1000px) {
+width: 60vw;
+height 25vh;
+}
+
 
 `;
 
@@ -84,20 +96,8 @@ export default function Main({ darkMode }: DarkProps) {
   };
   return (
     <Body darkMode={darkMode}>
-      <Wrapper>
-        <Image
-          src="/hydra-guard.png"
-          style={{
-            position: "absolute",
-            right: 250,
-            height: 461,
-            width: 200,
-            marginTop: 10,
-            transform: `rotateY(180deg)`,
-            opacity: 0.2,
-            marginRight: 820,
-          }}
-        />{" "}
+      <Wrapper className="wrapper">
+        <Image className="dragon--logo--left" src="/hydra-guard.png" />{" "}
         <SwapBox darkMode={darkMode}>
           Stake
           <Input darkMode={darkMode} />
@@ -119,18 +119,7 @@ export default function Main({ darkMode }: DarkProps) {
             </ConnectButton>
           )}
         </SwapBox>
-        <Image
-          src="/hydra-guard.png"
-          style={{
-            position: "absolute",
-            marginTop: 10,
-            left: 250,
-            height: 461,
-            width: 200,
-            opacity: 0.2,
-            marginLeft: 820,
-          }}
-        />{" "}
+        <Image className="dragon--logo--right" src="/hydra-guard.png" />{" "}
       </Wrapper>
     </Body>
   );

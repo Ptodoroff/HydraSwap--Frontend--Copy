@@ -23,6 +23,11 @@ const SelectedTokenInfo = styled.button<DarkProps>`
     opacity: 0.8;
     cursor: pointer;
   }
+  @media (max-width: 1000px) {
+    width: 22vw;
+    height: 5vh;
+    font-size: 12px;
+  }
 `;
 
 const Max = styled.button<DarkProps>`
@@ -40,6 +45,13 @@ const Max = styled.button<DarkProps>`
   &:hover {
     border: 1px solid #026fc2;
     cursor: pointer;
+    border-radius: 12px;
+  }
+
+  @media (max-width: 1000px) {
+    width: 10vw;
+    height: 3vh;
+    font-size: 12px;
   }
 `;
 
@@ -51,6 +63,10 @@ const TokenInput = styled.input<DarkProps>`
   height: 29px;
   outline: none;
   font-size: 25px;
+  @media (max-width: 1000px) {
+    width: 18vw;
+    height: 4vh;
+  }
 `;
 
 const InputCluster = styled.div<DarkProps>`
@@ -61,6 +77,10 @@ const InputCluster = styled.div<DarkProps>`
   justify-content: space-between;
   border-radius: 20px;
   padding: 5px;
+  @media (max-width: 1000px) {
+    width: 10vw;
+    height: 8vh;
+  }
 `;
 
 export const ApproveandStake = styled.button<DarkProps>`
@@ -80,6 +100,12 @@ export const ApproveandStake = styled.button<DarkProps>`
     background-color: #d7edfe;
     cursor: pointer;
   }
+  @media (max-width: 1000px) {
+    width: 30vw;
+    height: 5vh;
+    border-radius:12px;
+    font-size: 15px;
+  }
 `;
 export const ButtonCluster = styled.div`
   width: 519px;
@@ -87,6 +113,12 @@ export const ButtonCluster = styled.div`
   justify-content: center;
   align-items: center;
   padding: 0px;
+  @media (max-width: 1000px) {
+    width: 60vw;
+    height: 5vh;
+    justify-content: space-around;
+    font-size: 12px;
+  }
 `;
 
 const InfoPanel = styled.div<DarkProps>`
@@ -104,6 +136,12 @@ const InfoPanel = styled.div<DarkProps>`
   align-items: space-between;
   justify-content: space-between;
   color: ${(props) => (props.darkMode ? "white" : "black")};
+
+  @media (max-width: 1000px) {
+    width: 50vw;
+    height: 9vh;
+    border-radius: 15px;
+  }
 `;
 
 export default function Input({ dark, darkMode }: DarkProps) {
@@ -112,12 +150,15 @@ export default function Input({ dark, darkMode }: DarkProps) {
       <InfoPanel darkMode={darkMode}>
         <span
           style={{
+            display: "flex",
+            justifyContent: "space-between",
             fontSize: "14px",
             fontWeight: 550,
             color: darkMode ? "white" : "black",
           }}
         >
-          Amount
+          <div>Amount</div>
+          <div>-</div>
         </span>
         <InputCluster darkMode={darkMode}>
           <TokenInput darkMode={darkMode}></TokenInput>
@@ -126,16 +167,10 @@ export default function Input({ dark, darkMode }: DarkProps) {
           </Max>
           <SelectedTokenInfo darkMode={darkMode}>
             <Image
+              className="coinLogo"
               darkMode={darkMode}
               src="./changex-logo-round.png"
-              style={{
-                width: 24,
-                height: 24,
-                marginRight: 20,
-                marginLeft: 20,
-                borderRadius: 50,
-                boxShadow: darkMode ? "none" : "3px 3px 5px #ccc",
-              }}
+              style={{ boxShadow: darkMode ? "none" : "3px 3px 5px #ccc" }}
             />
             CHANGE
           </SelectedTokenInfo>
