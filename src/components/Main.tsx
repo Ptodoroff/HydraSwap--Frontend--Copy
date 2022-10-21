@@ -39,14 +39,17 @@ const ConnectButton = styled.div<DarkProps>`
 `;
 
 const Body = styled.div<DarkProps>`
-  position: relative;
-  padding-top: 100px;
+  font-size: 3em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
   background-image: ${(props) =>
     props.darkMode
       ? "radial-gradient(50% 50% at 50% 50%, rgba(2, 111, 194, 0.1) 0%, rgba(255, 255, 255, 0) 100%)"
       : "radial-gradient(50% 50% at 50% 50%, rgba(33, 114, 229, 0.1) 0%, rgba(33, 36, 41, 0) 100%)"};
-  width: auto;
-  height: 830px;
+  min-width: auto;
+  min-height: 830px;
   background-color: ${(props) =>
     props.darkMode ? "rgb(44, 47, 54)" : "rgb(247, 248, 250)"};
 `;
@@ -96,6 +99,9 @@ export default function Main({ darkMode }: DarkProps) {
   };
   return (
     <Body darkMode={darkMode}>
+      <div id="stakingDiv">
+        <span id="changeTicker">$CHANGE</span>Staking
+      </div>
       <Wrapper className="wrapper">
         <Image className="dragon--logo--left" src="/hydra-guard.png" />{" "}
         <SwapBox darkMode={darkMode}>

@@ -2,12 +2,13 @@
 body {
   padding: 0 !important;
   font-family: fira-sans, sans-serif;
-  font-weight: 400 !important;
+  font-weight: 400;
   font-style: normal;
+  font-size: 62.5%;
 }
 * {
   font-family: fira-sans, sans-serif;
-  font-weight: 400 !important;
+  font-weight: 400;
   font-style: normal;
 }
 
@@ -42,11 +43,11 @@ body {
 
 @media (max-width: 1000px) {
   .dragon--logo--right {
-    width: 25vw;
+    max-width: 20vw;
     margin-top: 10px;
     opacity: 0.2;
     right: 0px;
-    height: 45vh;
+    max-height: 45vh;
   }
 
   .dragon--logo--left {
@@ -59,11 +60,12 @@ body {
   }
 
   .wrapper {
-    position: static;
+    position: absolute;
+    margin: auto;
   }
 }
 
-@media (min-width: 800px) {
+@media (max-width: 800px) {
   .stakingWrap {
     margin-left: 10vw;
   }
@@ -76,4 +78,20 @@ body {
     width: 100vw;
     height: 100vh;
   }
+}
+
+#changeTicker {
+  margin-right: 0.5rem;
+  font-weight: bold;
+  font-size: 1em;
+  color: #6da8ff;
+}
+
+#stakingDiv {
+  font-weight: 500;
+  background-image: radial-gradient(
+    50% 50% at 50% 50%,
+    rgba(33, 114, 229, 0.1) 0%,
+    rgba(33, 36, 41, 0) 100%
+  );
 }

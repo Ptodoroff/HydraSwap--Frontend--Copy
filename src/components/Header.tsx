@@ -140,29 +140,19 @@ export default function Header({ dark, darkMode }: DarkProps) {
   return (
     <>
       <HeaderFrame darkMode={darkMode}>
-        <Image
-          darkMode={darkMode}
-          src="/hydra-logo.png"
-          style={{
-            width: 50,
-            backgroundColor: darkMode ? `white` : `#edeef2`,
-            borderRadius: 50,
-            borderStyle: "none",
-          }}
-        />
-        <StakingTitleWrap darkMode={darkMode} className="stakingWrap">
-          <div
+        <a href="https://changex.io/" target="_blank">
+          <Image
+            darkMode={darkMode}
+            src="/hydra-logo.png"
             style={{
-              borderRadius: 8,
-              backgroundColor: darkMode ? "#40444f" : "#e8e8e8",
-              padding: 8,
-              fontWeight: 800,
-              color: darkMode ? "white" : "black",
+              width: 50,
+              backgroundColor: darkMode ? `white` : `#edeef2`,
+              borderRadius: 50,
+              borderStyle: "none",
             }}
-          >
-            Staking
-          </div>
-        </StakingTitleWrap>
+          />
+        </a>
+
         <div style={{ display: "flex" }}>
           {account ? (
             <ConnectedButton darkMode={darkMode} onClick={stop}>
