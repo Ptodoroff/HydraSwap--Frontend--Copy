@@ -1,13 +1,14 @@
 import styled from "styled-components";
 import Image from "./Image";
 import { useEffect, useState } from "react";
-import { useWeb3React } from "@web3-react/core";
-import { Web3Provider } from "@ethersproject/providers";
-import { InjectedConnector } from "@web3-react/injected-connector";
+import { useConnectWallet } from "@web3-onboard/react";
+import { ethers } from "ethers";
 import "../App.css";
+
 interface DarkProps {
-  darkMode: boolean;
+  darkMode?: boolean;
   dark?: any;
+  onClick?: any;
 }
 
 const ConnectButton = styled.button<DarkProps>`
@@ -75,17 +76,6 @@ const HeaderFrame = styled.div<DarkProps>`
     props.darkMode ? "rgb(44, 47, 54)" : "rgb(247, 248, 250)"};
 `;
 
-const StakingTitleWrap = styled.div<DarkProps>`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: ${(props) => (props.darkMode ? "#212429" : "white")};
-  width: auto;
-  height: 50px;
-  padding: 2px;
-  border-radius: 12px;
-`;
-
 const BalanceDiv = styled.div<DarkProps>`
   margin-left: 3px;
   width: 95px;
@@ -113,30 +103,17 @@ const ThemeToggle = styled.button<DarkProps>`
   }
 `;
 export default function Header({ dark, darkMode }: DarkProps) {
-  const [balance, setBalance] = useState("");
-
-  const injectedConnector = new InjectedConnector({
-    supportedChainIds: [1, 3, 4, 5],
-  });
-  const { chainId, account, activate, deactivate, active, library } =
-    useWeb3React<Web3Provider>();
-  const connect = () => {
-    activate(injectedConnector);
-  };
-
-  const stop = () => {
-    deactivate();
-  };
+  const [{ wallet, connecting }, connect, disconnect] = useConnectWallet();
+  const [ethersProvider, setProvider] =
+    useState<ethers.providers.Web3Provider | null>();
 
   useEffect(() => {
-    library?.getBalance(account!).then((result: any) => {
-      setBalance(String(result / 1e18));
-    });
-  }, [account, library, chainId]);
-  useEffect(() => {
-    console.log(chainId, account, active);
-  });
-
+    // If the wallet has a provider than the wallet is connected
+    if (wallet?.provider) {
+      setProvider(new ethers.providers.Web3Provider(wallet.provider, "any"));
+      console.log(wallet.accounts[0].balance);
+    }
+  }, [wallet]);
   return (
     <>
       <HeaderFrame darkMode={darkMode}>
@@ -154,17 +131,20 @@ export default function Header({ dark, darkMode }: DarkProps) {
         </a>
 
         <div style={{ display: "flex" }}>
-          {account ? (
-            <ConnectedButton darkMode={darkMode} onClick={stop}>
-              {`0x...${account.slice(-3)}`}
+          {connecting ? (
+            <ConnectedButton darkMode={darkMode}>
+              {`0x...`}
               <BalanceDiv darkMode={darkMode}>
                 {" "}
-                {`${Number(balance).toFixed(3)} ETH`}
+                {`${Number(wallet?.accounts[0].balance).toFixed(3)} ETH`}
               </BalanceDiv>
             </ConnectedButton>
           ) : (
-            <ConnectButton darkMode={darkMode} onClick={connect}>
-              {" "}
+            <ConnectButton
+              onClick={() => {
+                connect();
+              }}
+            >
               Connect to a wallet
             </ConnectButton>
           )}

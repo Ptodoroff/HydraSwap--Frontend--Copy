@@ -1,17 +1,16 @@
-import React from "react";
 import styled from "styled-components";
 import Image from "./Image";
 import Input from "./Input";
 import "../App.css";
-
-import { useWeb3React } from "@web3-react/core";
-import { Web3Provider } from "@ethersproject/providers";
-import { InjectedConnector } from "@web3-react/injected-connector";
+import { useConnectWallet } from "@web3-onboard/react";
+import { useState } from "react";
+import { ethers } from "ethers";
 import { ApproveandStake, ButtonCluster } from "./Input";
 
 interface DarkProps {
   darkMode: boolean;
   dark?: any;
+  onClick?: any;
 }
 
 const ConnectButton = styled.div<DarkProps>`
@@ -90,13 +89,10 @@ height 25vh;
 `;
 
 export default function Main({ darkMode }: DarkProps) {
-  const { account, activate } = useWeb3React<Web3Provider>();
-  const injectedConnector = new InjectedConnector({
-    supportedChainIds: [1, 3, 4, 5, 42],
-  });
-  const connect = () => {
-    activate(injectedConnector);
-  };
+  const [{ wallet, connecting }, connect, disconnect] = useConnectWallet();
+  const [ethersProvider, setProvider] =
+    useState<ethers.providers.Web3Provider | null>();
+
   return (
     <Body darkMode={darkMode}>
       <div id="stakingDiv">
@@ -107,7 +103,7 @@ export default function Main({ darkMode }: DarkProps) {
         <SwapBox darkMode={darkMode}>
           Stake
           <Input darkMode={darkMode} />
-          {account ? (
+          {wallet ? (
             <ButtonCluster>
               <ApproveandStake darkMode={darkMode} style={{ marginRight: 30 }}>
                 {" "}
@@ -119,7 +115,12 @@ export default function Main({ darkMode }: DarkProps) {
               </ApproveandStake>
             </ButtonCluster>
           ) : (
-            <ConnectButton darkMode={darkMode} onClick={connect}>
+            <ConnectButton
+              darkMode={darkMode}
+              onClick={() => {
+                connect();
+              }}
+            >
               {" "}
               Connect Wallet{" "}
             </ConnectButton>
