@@ -9,7 +9,7 @@ import { ethers } from "ethers";
 
 window.Buffer = window.Buffer || require("buffer").Buffer;
 function App() {
-  const GOERLI_RPC_URL = `https://goerli.infura.io/v3/d92c482888c64718a93cfbc3082b73be`; /// iMPORTANT - SHOULD FIX IT PROCE.ENV.REACT_APP_GOERLI_KEY WONT WORK
+  const GOERLI_RPC_URL = `https://goerli.infura.io/v3/d92c482888c64718a93cfbc3082b73be`; /// iMPORTANT - SHOULD FIX IT PROCESS.ENV.REACT_APP_GOERLI_KEY WONT WORK
 
   const injected = injectedModule();
   const walletConnect = walletConnectModule({

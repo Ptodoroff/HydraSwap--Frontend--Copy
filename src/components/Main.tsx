@@ -17,6 +17,7 @@ const ConnectButton = styled.div<DarkProps>`
   width: 518px;
   font-size: 17px;
   display: flex;
+  margin-top: 1em;
   justify-content: center;
   align-items: center;
   height: 50px;
@@ -61,31 +62,29 @@ const Wrapper = styled.div`
 `;
 
 const SwapBox = styled.div<DarkProps>`
-position: 'absolute';
-background-color: ${(props) => (props.darkMode ? "#212429" : "white")};
-display:flex;
-align-items:center;
-justify-content:space-between;
-flex-direction:column;
-width: 512px;
-height 215px;
-border-radius: 30px;
-font-weight: 200;
-font-size:20px;
-border:2px;
-position: relative;
-z-index: 10;
-box-shadow:0px 0px 25px rgba(2, 111, 194, 0.5);
-padding:16px;
-margin-top: 70px;
-color: ${(props) => (props.darkMode ? "white" : "black")};
+  z-index: 1;
+  position: "absolute";
+  background-color: ${(props) => (props.darkMode ? "#212429" : "white")};
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  width: 512px;
 
-@media(max-width: 1000px) {
-width: 60vw;
-height 25vh;
-}
+  border-radius: 30px;
+  font-weight: 200;
+  font-size: 20px;
+  border: 2px;
+  position: relative;
+  box-shadow: 0px 0px 25px rgba(2, 111, 194, 0.5);
+  padding: 16px;
+  margin-top: 70px;
+  color: ${(props) => (props.darkMode ? "white" : "black")};
 
-
+  @media (max-width: 1000px) {
+    width: 60vw;
+    height: 25vh;
+  }
 `;
 
 export default function Main({ darkMode }: DarkProps) {
@@ -104,16 +103,33 @@ export default function Main({ darkMode }: DarkProps) {
           Stake
           <Input darkMode={darkMode} />
           {wallet ? (
-            <ButtonCluster>
-              <ApproveandStake darkMode={darkMode} style={{ marginRight: 30 }}>
-                {" "}
-                Approve{" "}
-              </ApproveandStake>
-              <ApproveandStake darkMode={darkMode} style={{ marginLeft: 30 }}>
-                {" "}
-                Stake{" "}
-              </ApproveandStake>
-            </ButtonCluster>
+            <>
+              <p id="stakedBalance">Staked Balance:</p>
+              <ButtonCluster>
+                <ApproveandStake
+                  darkMode={darkMode}
+                  style={{ marginRight: 30 }}
+                >
+                  {" "}
+                  Stake{" "}
+                </ApproveandStake>
+                <ApproveandStake darkMode={darkMode} style={{ marginLeft: 30 }}>
+                  {" "}
+                  Unstake{" "}
+                </ApproveandStake>
+              </ButtonCluster>
+              <div id="restakeWithdrawDiv">
+                Current profit: 0 CHANGE
+                <div id="RestakeAndWithdrawButtons">
+                  <ApproveandStake id="Restake" darkMode={darkMode}>
+                    Restake
+                  </ApproveandStake>
+                  <ApproveandStake id="Withdraw" darkMode={darkMode}>
+                    Withdraw
+                  </ApproveandStake>
+                </div>
+              </div>
+            </>
           ) : (
             <ConnectButton
               darkMode={darkMode}
@@ -128,6 +144,20 @@ export default function Main({ darkMode }: DarkProps) {
         </SwapBox>
         <Image className="dragon--logo--right" src="/hydra-guard.png" />{" "}
       </Wrapper>
+      {wallet ? (
+        <div id="Apy">
+          <div id="annualReward">
+            <span>Projected Annual Reward </span>
+            <span> 0 CHANGE</span>
+          </div>
+          <div id="apyPercent">
+            <span>APY</span>
+            <span> 9.3%</span>
+          </div>
+        </div>
+      ) : (
+        " "
+      )}
     </Body>
   );
 }
