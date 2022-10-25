@@ -33,9 +33,16 @@ function App() {
     chains,
   });
 
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(
+    localStorage.getItem("dark-mode") === "true"
+  );
+  useEffect(() => {
+    localStorage.setItem("dark-mode", String(darkMode));
+  }, [darkMode]);
+
   const dark = () => {
     setDarkMode(!darkMode);
+    return darkMode;
   };
 
   return (

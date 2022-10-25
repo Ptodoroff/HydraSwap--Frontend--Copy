@@ -6,7 +6,7 @@ import { ethers } from "ethers";
 import "../App.css";
 
 interface DarkProps {
-  darkMode?: boolean;
+  darkMode: boolean;
   dark?: any;
   onClick?: any;
 }
@@ -141,6 +141,7 @@ export default function Header({ dark, darkMode }: DarkProps) {
             </ConnectedButton>
           ) : (
             <ConnectButton
+              darkMode={darkMode}
               onClick={() => {
                 connect();
               }}

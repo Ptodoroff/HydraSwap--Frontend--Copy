@@ -108,7 +108,7 @@ body {
 
 :root {
   --account-center-z-index: 2;
-  --account-center-minimized-right: 2em;
+  --account-center-position-right: 50px;
 }
 
 #restakeWithdrawDiv {
