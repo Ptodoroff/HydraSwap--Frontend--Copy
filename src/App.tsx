@@ -10,6 +10,7 @@ import { ethers } from "ethers";
 window.Buffer = window.Buffer || require("buffer").Buffer;
 function App() {
   const GOERLI_RPC_URL = `https://goerli.infura.io/v3/d92c482888c64718a93cfbc3082b73be`; /// iMPORTANT - SHOULD FIX IT PROCESS.ENV.REACT_APP_GOERLI_KEY WONT WORK
+  const MAINNET_RPC_URL = `https://mainnet.infura.io/v3/d92c482888c64718a93cfbc3082b73be`; /// iMPORTANT - SHOULD FIX IT PROCESS.ENV.REACT_APP_GOERLI_KEY WONT WORK
 
   const injected = injectedModule();
   const walletConnect = walletConnectModule({
@@ -25,7 +26,14 @@ function App() {
     label: "Goerli",
     rpcUrl: GOERLI_RPC_URL,
   };
-  const chains = [ethereumGoerli];
+
+  const ethereumMainnet = {
+    id: "0x1",
+    token: "ETH",
+    label: "Mainnet",
+    rpcUrl: MAINNET_RPC_URL,
+  };
+  const chains = [ethereumGoerli, ethereumMainnet];
   const wallets = [injected, walletConnect];
 
   const web3Onboard = init({
