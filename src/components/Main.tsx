@@ -72,7 +72,6 @@ const SwapBox = styled.div<DarkProps>`
   justify-content: space-between;
   flex-direction: column;
   width: 512px;
-
   border-radius: 30px;
   font-weight: 200;
   font-size: 20px;
@@ -82,11 +81,42 @@ const SwapBox = styled.div<DarkProps>`
   padding: 16px;
   margin-top: 70px;
   color: ${(props) => (props.darkMode ? "white" : "black")};
-
   @media (max-width: 1000px) {
     width: 60vw;
     height: 25vh;
   }
+`;
+
+const Apy = styled.div<DarkProps>`
+  position: absolute;
+  margin-top: 25.5em;
+  font-size: 0.6em;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0px 0px 25px rgba(2, 111, 194, 0.5);
+  border-radius: 20px;
+  padding: 0.5em;
+  width: 25em;
+  z-index: -0.5;
+  background-color: ${(props) => (props.darkMode ? "#212429" : "white")};
+`;
+
+const RestakeAndWithdrawButtons = styled.div<DarkProps>`
+  display: flex;
+  color: ${(props) => (props.darkMode ? "white" : "black")};
+`;
+
+const AnnualReward = styled.div<DarkProps>`
+  display: flex;
+  justify-content: space-between;
+  color: ${(props) => (props.darkMode ? "white" : "black")};
+`;
+
+const ApyPercent = styled.div<DarkProps>`
+  display: flex;
+  color: ${(props) => (props.darkMode ? "white" : "black")};
+
+  justify-content: space-between;
 `;
 
 export default function Main({ darkMode }: DarkProps) {
@@ -94,7 +124,9 @@ export default function Main({ darkMode }: DarkProps) {
   const [ethersProvider, setProvider] =
     useState<ethers.providers.Web3Provider | null>();
   let stakedBalance: number = 0;
-  let changeXBalanceOfWallet: number = 0;
+  let earnedRewards: number = 0;
+  const [changeXBalance, setChangeXBalance] = useState<number | null>();
+
   useEffect(() => {
     // If the wallet has a provider than the wallet is connected
     if (wallet?.provider) {
@@ -102,6 +134,7 @@ export default function Main({ darkMode }: DarkProps) {
       console.log(wallet.accounts[0].balance);
     }
     getStakedBalance();
+    getCurrentRewards();
   }, [wallet]);
 
   //===============================================
@@ -131,9 +164,33 @@ export default function Main({ darkMode }: DarkProps) {
     await mirrorStakingContract.balance(wallet?.accounts[0].address);
   };
 
-  const getChangeXbalance = async () => {
-    changeXBalanceOfWallet = await Number(
-      changeXContract.getBalance(wallet?.accounts[0].address)
+  const stakeTokens = async () => {
+    let approve = await changeXContract.approve(
+      mirrorStakingContract.address,
+      changeXBalance
+    );
+    let response = await approve.wait();
+    response
+      ? console.log("success")
+      : console.log("tx for approving tokens has failed");
+    let stake = await mirrorStakingContract.stake(changeXBalance);
+    let response1 = await stake.wait();
+    response1
+      ? console.log(`successfully staked ${changeXBalance}`)
+      : console.log("tx for staking tokens has failed");
+  };
+
+  const unstakeTokens = async () => {
+    let unstake = await mirrorStakingContract.unstake(changeXBalance);
+    let response = await unstake.wait();
+    response
+      ? console.log(`successfully unstaked ${changeXBalance} $CHANGE`)
+      : console.log("tx for unstaking tokens has failed");
+  };
+
+  const getCurrentRewards = async () => {
+    earnedRewards = await Number(
+      mirrorStakingContract.earned(wallet?.accounts[0])
     );
   };
   return (
@@ -145,7 +202,11 @@ export default function Main({ darkMode }: DarkProps) {
         <Image className="dragon--logo--left" src="/hydra-guard.png" />{" "}
         <SwapBox darkMode={darkMode}>
           Stake
-          <Input darkMode={darkMode} />
+          <Input
+            darkMode={darkMode}
+            setChangeXBalance={setChangeXBalance}
+            changeXBalance={changeXBalance}
+          />
           {wallet ? (
             <>
               <p id="stakedBalance">Staked Balance: {stakedBalance}</p>
@@ -153,25 +214,30 @@ export default function Main({ darkMode }: DarkProps) {
                 <ApproveandStake
                   darkMode={darkMode}
                   style={{ marginRight: 30 }}
+                  onClick={stakeTokens}
                 >
                   {" "}
                   Stake{" "}
                 </ApproveandStake>
-                <ApproveandStake darkMode={darkMode} style={{ marginLeft: 30 }}>
+                <ApproveandStake
+                  darkMode={darkMode}
+                  style={{ marginLeft: 30 }}
+                  onClick={unstakeTokens}
+                >
                   {" "}
                   Unstake{" "}
                 </ApproveandStake>
               </ButtonCluster>
               <div id="restakeWithdrawDiv">
-                Current profit: 0 CHANGE
-                <div id="RestakeAndWithdrawButtons">
+                Current profit: {earnedRewards} CHANGE
+                <RestakeAndWithdrawButtons darkMode={darkMode}>
                   <ApproveandStake id="Restake" darkMode={darkMode}>
                     Restake
                   </ApproveandStake>
                   <ApproveandStake id="Withdraw" darkMode={darkMode}>
                     Withdraw
                   </ApproveandStake>
-                </div>
+                </RestakeAndWithdrawButtons>
               </div>
             </>
           ) : (
@@ -189,16 +255,16 @@ export default function Main({ darkMode }: DarkProps) {
         <Image className="dragon--logo--right" src="/hydra-guard.png" />{" "}
       </Wrapper>
       {wallet ? (
-        <div id="Apy">
-          <div id="annualReward">
+        <Apy darkMode={darkMode}>
+          <AnnualReward darkMode={darkMode}>
             <span>Projected Annual Reward </span>
             <span> 0 CHANGE</span>
-          </div>
-          <div id="apyPercent">
+          </AnnualReward>
+          <ApyPercent darkMode={darkMode}>
             <span>APY</span>
             <span> 9.3%</span>
-          </div>
-        </div>
+          </ApyPercent>
+        </Apy>
       ) : (
         " "
       )}

@@ -138,30 +138,3 @@ body {
   font-size: 0.7em;
   font-weight: 400;
 }
-
-#RestakeAndWithdrawButtons {
-  display: flex;
-}
-
-#Apy {
-  position: absolute;
-  margin-top: 25.5em;
-  font-size: 0.6em;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0px 0px 25px rgba(2, 111, 194, 0.5);
-  border-radius: 20px;
-  padding: 0.5em;
-  width: 25em;
-  z-index: -0.5;
-}
-
-#annualReward {
-  display: flex;
-  justify-content: space-between;
-}
-
-#apyPercent {
-  display: flex;
-  justify-content: space-between;
-}

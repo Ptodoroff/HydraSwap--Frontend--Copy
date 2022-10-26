@@ -11,6 +11,8 @@ interface DarkProps {
   dark?: any;
   value?: any;
   onChange?: any;
+  setChangeXBalance?: any;
+  changeXBalance?: any;
 }
 
 const SelectedTokenInfo = styled.button<DarkProps>`
@@ -152,12 +154,16 @@ const InfoPanel = styled.div<DarkProps>`
   }
 `;
 
-export default function Input({ dark, darkMode }: DarkProps) {
+export default function Input({
+  dark,
+  darkMode,
+  setChangeXBalance,
+  changeXBalance,
+}: DarkProps) {
   const [{ wallet, connecting }, connect, disconnect] = useConnectWallet();
   const [ethersProvider, setProvider] =
     useState<ethers.providers.Web3Provider | null>();
   const signer: any = ethersProvider?.getSigner();
-  const [changeXBalance, setChangeXBalance] = useState<number | null>();
 
   let changeXBalanceOfWallet: number = 0;
   useEffect(() => {
