@@ -36,6 +36,9 @@ function App() {
   const chains = [ethereumGoerli, ethereumMainnet];
   const wallets = [injected, walletConnect];
 
+  const [ethersProvider, setProvider] =
+    useState<ethers.providers.Web3Provider | null>();
+
   const web3Onboard = init({
     wallets,
     chains,

@@ -1,9 +1,16 @@
 import styled from "styled-components";
 import Image from "./Image";
+import { useState, useEffect } from "react";
+import { ethers } from "ethers";
+import { useConnectWallet } from "@web3-onboard/react";
+import MirrorStakingABI from "../contracts/MirrorStaking.json";
+import ChangeXABI from "../contracts/ChangeX.json";
 
 interface DarkProps {
   darkMode: boolean;
   dark?: any;
+  value?: any;
+  onChange?: any;
 }
 
 const SelectedTokenInfo = styled.button<DarkProps>`
@@ -59,6 +66,7 @@ const TokenInput = styled.input<DarkProps>`
   display: flex;
   border: #212429;
   background-color: ${(props) => (props.darkMode ? "#212429" : "white")};
+  color: ${(props) => (props.darkMode ? "white" : "black")};
   width: 314px;
   height: 29px;
   outline: none;
@@ -145,6 +153,41 @@ const InfoPanel = styled.div<DarkProps>`
 `;
 
 export default function Input({ dark, darkMode }: DarkProps) {
+  const [{ wallet, connecting }, connect, disconnect] = useConnectWallet();
+  const [ethersProvider, setProvider] =
+    useState<ethers.providers.Web3Provider | null>();
+  const signer: any = ethersProvider?.getSigner();
+  const [changeXBalance, setChangeXBalance] = useState<number | null>();
+
+  let changeXBalanceOfWallet: number = 0;
+  useEffect(() => {
+    // If the wallet has a provider than the wallet is connected
+    if (wallet?.provider) {
+      setProvider(new ethers.providers.Web3Provider(wallet.provider, "any"));
+      console.log(wallet.accounts[0].balance);
+    }
+    getChangeXbalance();
+  }, [wallet, changeXBalanceOfWallet]);
+  //=========================================================
+  // ChangeX token contract instance and function invocations
+  //=========================================================
+
+  const amountInput = (input: any) => {
+    setChangeXBalance(input.target.value);
+  };
+  const ChangeXTokenAddress: string =
+    "0x7051faED0775f664a0286Af4F75ef5ed74e02754";
+  const changeXContract = new ethers.Contract(
+    ChangeXTokenAddress,
+    ChangeXABI,
+    signer
+  );
+
+  const getChangeXbalance = async () => {
+    changeXBalanceOfWallet = await Number(
+      changeXContract.getBalance(wallet?.accounts[0].address)
+    );
+  };
   return (
     <>
       <InfoPanel darkMode={darkMode}>
@@ -158,11 +201,20 @@ export default function Input({ dark, darkMode }: DarkProps) {
           }}
         >
           <div>Amount</div>
-          <div>-</div>
+          <div>{changeXBalanceOfWallet}</div>
         </span>
         <InputCluster darkMode={darkMode}>
-          <TokenInput darkMode={darkMode}></TokenInput>
-          <Max darkMode={darkMode}>
+          <TokenInput
+            darkMode={darkMode}
+            value={changeXBalance}
+            onChange={amountInput}
+          ></TokenInput>
+          <Max
+            darkMode={darkMode}
+            onClick={() => {
+              setChangeXBalance(changeXBalanceOfWallet);
+            }}
+          >
             <span>MAX</span>
           </Max>
           <SelectedTokenInfo darkMode={darkMode}>
