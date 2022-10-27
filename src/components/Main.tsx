@@ -13,6 +13,7 @@ interface DarkProps {
   darkMode: boolean;
   dark?: any;
   onClick?: any;
+  provider?: any;
 }
 
 const ConnectButton = styled.div<DarkProps>`
@@ -119,28 +120,24 @@ const ApyPercent = styled.div<DarkProps>`
   justify-content: space-between;
 `;
 
-export default function Main({ darkMode }: DarkProps) {
+export default function Main({ darkMode, provider }: DarkProps) {
   const [{ wallet, connecting }, connect, disconnect] = useConnectWallet();
-  const [ethersProvider, setProvider] =
-    useState<ethers.providers.Web3Provider | null>();
   let stakedBalance: number = 0;
   let earnedRewards: number = 0;
   const [changeXBalance, setChangeXBalance] = useState<number | null>();
 
   useEffect(() => {
     // If the wallet has a provider than the wallet is connected
-    if (wallet?.provider) {
-      setProvider(new ethers.providers.Web3Provider(wallet.provider, "any"));
-      console.log(wallet.accounts[0].balance);
+    if (provider) {
+      getStakedBalance();
+      getCurrentRewards();
     }
-    getStakedBalance();
-    getCurrentRewards();
   }, [wallet]);
 
   //===============================================
   //Mirror Staking contract instance
   //===============================================
-  const signer: any = ethersProvider?.getSigner();
+  const signer: any = provider?.getSigner();
   const MirrorStakingAddress: string =
     "0x48309699c488ad207Dd9d228bBb013cF848a6e50";
   const mirrorStakingContract = new ethers.Contract(
@@ -161,7 +158,7 @@ export default function Main({ darkMode }: DarkProps) {
     signer
   );
   const getStakedBalance = async () => {
-    await mirrorStakingContract.balance(wallet?.accounts[0].address);
+    await mirrorStakingContract.balances(wallet?.accounts[0].address);
   };
 
   const stakeTokens = async () => {
@@ -193,6 +190,12 @@ export default function Main({ darkMode }: DarkProps) {
       mirrorStakingContract.earned(wallet?.accounts[0])
     );
   };
+  const reStakeReward = async () => {
+    await mirrorStakingContract.reinvest();
+  };
+  const withDrawReward = async () => {
+    await mirrorStakingContract.getReward();
+  };
   return (
     <Body darkMode={darkMode}>
       <div id="stakingDiv">
@@ -209,7 +212,9 @@ export default function Main({ darkMode }: DarkProps) {
           />
           {wallet ? (
             <>
-              <p id="stakedBalance">Staked Balance: {stakedBalance}</p>
+              <p id="stakedBalance">
+                Staked Balance: {signer && stakedBalance}
+              </p>
               <ButtonCluster>
                 <ApproveandStake
                   darkMode={darkMode}
@@ -229,12 +234,20 @@ export default function Main({ darkMode }: DarkProps) {
                 </ApproveandStake>
               </ButtonCluster>
               <div id="restakeWithdrawDiv">
-                Current profit: {earnedRewards} CHANGE
+                Current profit: {signer && earnedRewards} CHANGE
                 <RestakeAndWithdrawButtons darkMode={darkMode}>
-                  <ApproveandStake id="Restake" darkMode={darkMode}>
+                  <ApproveandStake
+                    id="Restake"
+                    darkMode={darkMode}
+                    onClick={reStakeReward}
+                  >
                     Restake
                   </ApproveandStake>
-                  <ApproveandStake id="Withdraw" darkMode={darkMode}>
+                  <ApproveandStake
+                    id="Withdraw"
+                    darkMode={darkMode}
+                    onClick={withDrawReward}
+                  >
                     Withdraw
                   </ApproveandStake>
                 </RestakeAndWithdrawButtons>

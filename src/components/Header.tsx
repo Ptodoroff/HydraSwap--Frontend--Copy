@@ -9,6 +9,7 @@ interface DarkProps {
   darkMode: boolean;
   dark?: any;
   onClick?: any;
+  setProvider?: any;
 }
 
 const ConnectButton = styled.button<DarkProps>`
@@ -102,10 +103,8 @@ const ThemeToggle = styled.button<DarkProps>`
     cursor: pointer;
   }
 `;
-export default function Header({ dark, darkMode }: DarkProps) {
+export default function Header({ dark, darkMode, setProvider }: DarkProps) {
   const [{ wallet, connecting }, connect, disconnect] = useConnectWallet();
-  const [ethersProvider, setProvider] =
-    useState<ethers.providers.Web3Provider | null>();
 
   useEffect(() => {
     // If the wallet has a provider than the wallet is connected
@@ -113,7 +112,7 @@ export default function Header({ dark, darkMode }: DarkProps) {
       setProvider(new ethers.providers.Web3Provider(wallet.provider, "any"));
       console.log(wallet.accounts[0].balance);
     }
-  }, [wallet]);
+  }, []);
   return (
     <>
       <HeaderFrame darkMode={darkMode}>
