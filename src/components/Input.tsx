@@ -13,8 +13,6 @@ interface DarkProps {
   onChange?: any;
   setChangeXBalance?: any;
   changeXBalance?: any;
-  provider?: any;
-  setProvider?: any;
 }
 
 const SelectedTokenInfo = styled.button<DarkProps>`
@@ -105,17 +103,17 @@ export const ApproveandStake = styled.button<DarkProps>`
   padding: 3px;
   background-color: ${(props) => (props.darkMode ? "#1d2e48" : "#e1f2ff")};
   border-radius: 20px;
-  border: none;
+  border: none  ;
   color: #026fc2;
   font-weight: 500;
-  &:hover {
+  &:hover
     background-color: #d7edfe;
     cursor: pointer;
   }
   @media (max-width: 1000px) {
     width: 30vw;
     height: 5vh;
-    border-radius: 12px;
+    border-radius:12px;
     font-size: 15px;
   }
 `;
@@ -161,18 +159,20 @@ export default function Input({
   darkMode,
   setChangeXBalance,
   changeXBalance,
-  provider,
 }: DarkProps) {
   const [{ wallet, connecting }, connect, disconnect] = useConnectWallet();
-
-  const signer: any = provider?.getSigner();
+  const [ethersProvider, setProvider] =
+    useState<ethers.providers.Web3Provider | null>();
+  const signer: any = ethersProvider?.getSigner();
 
   let changeXBalanceOfWallet: number = 0;
   useEffect(() => {
     // If the wallet has a provider than the wallet is connected
-    if (provider) {
-      getChangeXbalance();
+    if (wallet?.provider) {
+      setProvider(new ethers.providers.Web3Provider(wallet.provider, "any"));
+      console.log(wallet.accounts[0].balance);
     }
+    getChangeXbalance();
   }, [wallet, changeXBalanceOfWallet]);
   //=========================================================
   // ChangeX token contract instance and function invocations

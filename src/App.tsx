@@ -11,8 +11,6 @@ window.Buffer = window.Buffer || require("buffer").Buffer;
 function App() {
   const GOERLI_RPC_URL = `https://goerli.infura.io/v3/d92c482888c64718a93cfbc3082b73be`; /// iMPORTANT - SHOULD FIX IT PROCESS.ENV.REACT_APP_GOERLI_KEY WONT WORK
   const MAINNET_RPC_URL = `https://mainnet.infura.io/v3/d92c482888c64718a93cfbc3082b73be`; /// iMPORTANT - SHOULD FIX IT PROCESS.ENV.REACT_APP_GOERLI_KEY WONT WORK
-  const [ethersProvider, setProvider] =
-    useState<ethers.providers.Web3Provider | null>();
 
   const injected = injectedModule();
   const walletConnect = walletConnectModule({
@@ -35,23 +33,15 @@ function App() {
     label: "Mainnet",
     rpcUrl: MAINNET_RPC_URL,
   };
-  const appMetadata = {
-    name: "My App",
-    icon: "/hydra-logo.png",
-    logo: "/hydra-logo.png",
-    description: "Log into HydraDex",
-    recommendedInjectedWallets: [
-      { name: "Coinbase", url: "https://wallet.coinbase.com/" },
-      { name: "MetaMask", url: "https://metamask.io" },
-    ],
-  };
   const chains = [ethereumGoerli, ethereumMainnet];
   const wallets = [injected, walletConnect];
+
+  const [ethersProvider, setProvider] =
+    useState<ethers.providers.Web3Provider | null>();
 
   const web3Onboard = init({
     wallets,
     chains,
-    appMetadata,
   });
 
   const [darkMode, setDarkMode] = useState(
@@ -69,8 +59,8 @@ function App() {
   return (
     <Web3OnboardProvider web3Onboard={web3Onboard}>
       <div className="App">
-        <Header darkMode={darkMode} dark={dark} setProvider={setProvider} />
-        <Main darkMode={darkMode} provider={ethersProvider} />
+        <Header darkMode={darkMode} dark={dark} />
+        <Main darkMode={darkMode} />
       </div>
     </Web3OnboardProvider>
   );
