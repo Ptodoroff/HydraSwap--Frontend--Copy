@@ -125,16 +125,16 @@ export default function Main({ darkMode }: DarkProps) {
     useState<ethers.providers.Web3Provider | null>();
   let stakedBalance: number = 0;
   let earnedRewards: number = 0;
-  const [changeXBalance, setChangeXBalance] = useState<number | null>();
+  const [changeXBalance, setChangeXBalance] = useState<number | null>(0);
 
   useEffect(() => {
     // If the wallet has a provider than the wallet is connected
     if (wallet?.provider) {
       setProvider(new ethers.providers.Web3Provider(wallet.provider, "any"));
       console.log(wallet.accounts[0].balance);
+      getStakedBalance();
+      getCurrentRewards();
     }
-    getStakedBalance();
-    getCurrentRewards();
   }, [wallet]);
 
   //===============================================
@@ -161,7 +161,7 @@ export default function Main({ darkMode }: DarkProps) {
     signer
   );
   const getStakedBalance = async () => {
-    await mirrorStakingContract.balance(wallet?.accounts[0].address);
+    await mirrorStakingContract.balances(wallet?.accounts[0].address);
   };
 
   const stakeTokens = async () => {

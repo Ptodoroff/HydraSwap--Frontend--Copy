@@ -39,9 +39,21 @@ function App() {
   const [ethersProvider, setProvider] =
     useState<ethers.providers.Web3Provider | null>();
 
+  const appMetadata = {
+    name: "My App",
+    icon: "/hydra-logo.png",
+    logo: "/hydra-logo.png",
+    description: "My app using Onboard",
+    recommendedInjectedWallets: [
+      { name: "Coinbase", url: "https://wallet.coinbase.com/" },
+      { name: "MetaMask", url: "https://metamask.io" },
+    ],
+  };
+
   const web3Onboard = init({
     wallets,
     chains,
+    appMetadata,
   });
 
   const [darkMode, setDarkMode] = useState(

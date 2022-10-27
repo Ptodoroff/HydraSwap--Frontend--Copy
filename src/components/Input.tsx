@@ -171,8 +171,8 @@ export default function Input({
     if (wallet?.provider) {
       setProvider(new ethers.providers.Web3Provider(wallet.provider, "any"));
       console.log(wallet.accounts[0].balance);
+      getChangeXbalance();
     }
-    getChangeXbalance();
   }, [wallet, changeXBalanceOfWallet]);
   //=========================================================
   // ChangeX token contract instance and function invocations
@@ -191,7 +191,7 @@ export default function Input({
 
   const getChangeXbalance = async () => {
     changeXBalanceOfWallet = await Number(
-      changeXContract.getBalance(wallet?.accounts[0].address)
+      changeXContract.balanceOf(wallet?.accounts[0].address)
     );
   };
   return (
